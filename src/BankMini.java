@@ -8,6 +8,8 @@ public class BankMini {
 
         Rekening rekening = new Rekening("001", "Ani", 100000);
 
+        // Saldo hanya dapat diubah melalui metode setor() dan tarik()git add src/BankMini.java
+
         // Percobaan akses langsung ke saldo:
         // rekening.saldo = 1000000;
         // Error: saldo has private access in Rekening
