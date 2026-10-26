@@ -1,13 +1,51 @@
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
-void main() {
-    //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-    // to see how IntelliJ IDEA suggests fixing it.
-    IO.println(String.format("Hello and welcome!"));
+import java.text.NumberFormat;
+import java.util.Locale;
 
-    for (int i = 1; i <= 5; i++) {
-        //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-        // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-        IO.println("i = " + i);
+public class Rekening {
+    // 1. Field private sesuai ketentuan
+    private String nomor;
+    private String pemilik;
+    private int saldo;
+
+    // 2. Constructor dengan parameter bernama sama, diisi memakai this
+    public Rekening(String nomor, String pemilik, int saldo) {
+        this.nomor = nomor;
+        this.pemilik = pemilik;
+        this.saldo = saldo;
+    }
+
+    // 3. Saldo read-only (hanya ada getter, tanpa setter saldo)
+    public int getSaldo() {
+        return saldo;
+    }
+
+    // Method private untuk format rupiah
+    private String formatRupiah(int angka) {
+        Locale localeID = new Locale("in", "ID");
+        NumberFormat formatRupiah = NumberFormat.getCurrencyInstance(localeID);
+        return formatRupiah.format(angka).replace("Rp", "Rp ");
+    }
+
+    // 4. Method setor dengan validasi jumlah > 0
+    public boolean setor(int jumlah) {
+        if (jumlah > 0) {
+            saldo += jumlah;
+            return true;
+        }
+        return false;
+    }
+
+    // 4. Method tarik dengan validasi jumlah > 0 dan tidak melebihi saldo
+    public boolean tarik(int jumlah) {
+        if (jumlah > 0 && jumlah <= saldo) {
+            saldo -= jumlah;
+            return true;
+        }
+        return false;
+    }
+
+    // 5. Method cetakInfo mencetak format: 001 | Ani | Rp120.000
+    public void cetakInfo() {
+        System.out.println(nomor + " | " + pemilik + " | " + formatRupiah(saldo));
     }
 }
